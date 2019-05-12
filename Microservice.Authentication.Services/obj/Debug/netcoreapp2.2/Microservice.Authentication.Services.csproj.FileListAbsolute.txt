@@ -1,0 +1,9 @@
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Services\bin\Debug\netcoreapp2.2\Microservice.Authentication.Services.deps.json
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Services\bin\Debug\netcoreapp2.2\Microservice.Authentication.Services.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Services\bin\Debug\netcoreapp2.2\Microservice.Authentication.Services.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Services\obj\Debug\netcoreapp2.2\Microservice.Authentication.Services.csprojAssemblyReference.cache
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Services\obj\Debug\netcoreapp2.2\Microservice.Authentication.Services.csproj.CoreCompileInputs.cache
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Services\obj\Debug\netcoreapp2.2\Microservice.Authentication.Services.AssemblyInfoInputs.cache
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Services\obj\Debug\netcoreapp2.2\Microservice.Authentication.Services.AssemblyInfo.cs
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Services\obj\Debug\netcoreapp2.2\Microservice.Authentication.Services.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Services\obj\Debug\netcoreapp2.2\Microservice.Authentication.Services.pdb

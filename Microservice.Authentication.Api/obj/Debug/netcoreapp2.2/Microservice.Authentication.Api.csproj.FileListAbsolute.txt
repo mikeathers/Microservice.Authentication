@@ -1,0 +1,17 @@
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Api.deps.json
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Api.runtimeconfig.json
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Api.runtimeconfig.dev.json
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Api.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.csprojAssemblyReference.cache
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.csproj.CoreCompileInputs.cache
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.RazorAssemblyInfo.cache
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.RazorAssemblyInfo.cs
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.AssemblyInfoInputs.cache
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.AssemblyInfo.cs
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.RazorTargetAssemblyInfo.cache
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Data.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Api.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Data.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.csproj.CopyComplete
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.pdb
