@@ -4,4 +4,14 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
+    <PackageReference Include="AutoMapper" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microservice.Authentication.Data\Microservice.Authentication.Data.csproj" />
+    <ProjectReference Include="..\Microservice.Authentication.Interfaces\Microservice.Authentication.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

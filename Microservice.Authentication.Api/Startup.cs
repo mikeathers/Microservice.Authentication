@@ -1,9 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 using Microservice.Authentication.Data.Configurations;
 using Microservice.Authentication.Data.Models.Config;
 using Microservice.Authentication.Data.Models.User;
+using Microservice.Authentication.Factories.Util;
+using Microservice.Authentication.Services.Util;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,9 +32,12 @@ namespace Microservice.Authentication.Api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCors();
+            services.AddLogging();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             var connectionString = Configuration["DatabaseSettings:ConnectionString"];
             var assembly = Configuration["DatabaseSettings:DefaultAssembly"];
@@ -60,9 +67,6 @@ namespace Microservice.Authentication.Api
 
                 ValidateAudience = true,
                 ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
-                ValidAudiences = new List<string>(),
-                
-                
 
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = _signingKey,
@@ -72,7 +76,7 @@ namespace Microservice.Authentication.Api
                 ClockSkew = TimeSpan.Zero
             };
 
-            // adds JWT authentication to the request pipeline and specifies to use the default scheme.
+            // Adds JWT authentication to the request pipeline and specifies to use the default scheme.
             services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -85,13 +89,7 @@ namespace Microservice.Authentication.Api
                     configureOptions.SaveToken = true;
                 });
 
-
-            services.AddCors();
-            services.AddLogging();
-
-            
-
-            // add identity
+            // Add identity
             var builder = services.AddIdentityCore<ApplicationUser>(o =>
             {
                 // configure identity options
@@ -105,7 +103,16 @@ namespace Microservice.Authentication.Api
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddSignInManager<SignInManager<ApplicationUser>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-            
+
+
+            // Add AutoFac
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterModule<AutoFacServiceModule>();
+            containerBuilder.RegisterModule<AutoFacFactoryModule>();
+            containerBuilder.Populate(services);
+            var container = containerBuilder.Build();
+            return new AutofacServiceProvider(container);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -121,6 +128,9 @@ namespace Microservice.Authentication.Api
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials());
+
+            AutoMapperConfig.Configure();
+
             app.UseMvc();
         }
     }

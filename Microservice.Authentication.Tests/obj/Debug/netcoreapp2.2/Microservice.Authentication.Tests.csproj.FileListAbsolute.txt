@@ -12,3 +12,14 @@ C:\Development\Development\Projects\Microservice.Authentication\Microservice.Aut
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\obj\Debug\netcoreapp2.2\Microservice.Authentication.Tests.AssemblyInfo.cs
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\obj\Debug\netcoreapp2.2\Microservice.Authentication.Tests.dll
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\obj\Debug\netcoreapp2.2\Microservice.Authentication.Tests.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Api.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Data.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Dtos.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Api.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Data.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Dtos.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\obj\Debug\netcoreapp2.2\Microservice.Authentication.Tests.csproj.CopyComplete
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Factories.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Interfaces.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Factories.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Interfaces.pdb

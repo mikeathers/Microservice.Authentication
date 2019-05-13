@@ -24,6 +24,8 @@ namespace Microservice.Authentication.Data.Migrations
 
                     b.Property<DateTime>("DateCreated");
 
+                    b.Property<string>("FunctionName");
+
                     b.Property<string>("Message");
 
                     b.HasKey("ErrorId");

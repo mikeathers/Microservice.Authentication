@@ -4,4 +4,13 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Generic\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microservice.Authentication.Data\Microservice.Authentication.Data.csproj" />
+    <ProjectReference Include="..\Microservice.Authentication.Dtos\Microservice.Authentication.Dtos.csproj" />
+  </ItemGroup>
+
 </Project>

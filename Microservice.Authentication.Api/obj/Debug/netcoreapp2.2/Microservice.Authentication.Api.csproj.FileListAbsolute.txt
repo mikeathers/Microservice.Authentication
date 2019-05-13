@@ -15,3 +15,11 @@ C:\Development\Development\Projects\Microservice.Authentication\Microservice.Aut
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.csproj.CopyComplete
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.dll
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\obj\Debug\netcoreapp2.2\Microservice.Authentication.Api.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Dtos.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Dtos.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Factories.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Interfaces.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Services.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Factories.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Services.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Api\bin\Debug\netcoreapp2.2\Microservice.Authentication.Interfaces.pdb

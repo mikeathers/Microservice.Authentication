@@ -7,3 +7,8 @@ C:\Development\Development\Projects\Microservice.Authentication\Microservice.Aut
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Interfaces\obj\Debug\netcoreapp2.2\Microservice.Authentication.Interfaces.AssemblyInfo.cs
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Interfaces\obj\Debug\netcoreapp2.2\Microservice.Authentication.Interfaces.dll
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Interfaces\obj\Debug\netcoreapp2.2\Microservice.Authentication.Interfaces.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Interfaces\bin\Debug\netcoreapp2.2\Microservice.Authentication.Data.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Interfaces\bin\Debug\netcoreapp2.2\Microservice.Authentication.Dtos.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Interfaces\bin\Debug\netcoreapp2.2\Microservice.Authentication.Data.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Interfaces\bin\Debug\netcoreapp2.2\Microservice.Authentication.Dtos.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Interfaces\obj\Debug\netcoreapp2.2\Microservice.Authentication.Interfaces.csproj.CopyComplete
