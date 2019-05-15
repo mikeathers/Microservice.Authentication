@@ -1,14 +1,15 @@
 ﻿using System.Reflection;
 using Autofac;
+using Module = Autofac.Module;
 
 namespace Microservice.Authentication.Services.Util
 {
-    public class AutoFacServiceModule : Autofac.Module
+    public class AutoFacServiceModule :Module
     {
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(GetType().GetTypeInfo().Assembly)
-                .Where(type => type.Name.EndsWith("Service"))
+                .Where(c => c.Name.EndsWith("Service"))
                 .AsImplementedInterfaces();
         }
     }

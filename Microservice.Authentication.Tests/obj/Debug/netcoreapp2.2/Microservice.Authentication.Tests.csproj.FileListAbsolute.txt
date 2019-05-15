@@ -23,3 +23,5 @@ C:\Development\Development\Projects\Microservice.Authentication\Microservice.Aut
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Interfaces.dll
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Factories.pdb
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Interfaces.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Services.dll
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Tests\bin\Debug\netcoreapp2.2\Microservice.Authentication.Services.pdb

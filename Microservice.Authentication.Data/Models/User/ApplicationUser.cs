@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace Microservice.Authentication.Data.Models.User
 {
@@ -9,6 +10,13 @@ namespace Microservice.Authentication.Data.Models.User
         public string FacebookId { get; set; }
         public string GoogleId { get; set; }
         public string PictureUrl { get; set; }
+        public string RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiry { get; set; }
 
+        public void UpdateRefreshToken(string refreshToken)
+        {
+            RefreshToken = refreshToken;
+            RefreshTokenExpiry = DateTime.Now.AddDays(10);
+        }
     }
 }

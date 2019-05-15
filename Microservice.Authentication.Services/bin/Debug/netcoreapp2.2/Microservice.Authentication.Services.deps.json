@@ -1,13 +1,14 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "f68dc37205a6b129e2f413b179519a1cb7ebce19"
+    "signature": "eb3b7ef881976c38d1b4f427e5e1c74c4ccb7e52"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.2": {
       "Microservice.Authentication.Services/1.0.0": {
         "dependencies": {
+          "AutoMapper": "8.1.0",
           "Autofac.Extensions.DependencyInjection": "4.4.0",
           "Microservice.Authentication.Data": "1.0.0",
           "Microservice.Authentication.Interfaces": "1.0.0"
@@ -33,6 +34,18 @@
           "lib/netstandard2.0/Autofac.Extensions.DependencyInjection.dll": {
             "assemblyVersion": "4.4.0.0",
             "fileVersion": "4.4.0.0"
+          }
+        }
+      },
+      "AutoMapper/8.1.0": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.5.0",
+          "System.Reflection.Emit": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoMapper.dll": {
+            "assemblyVersion": "8.1.0.0",
+            "fileVersion": "8.1.0.0"
           }
         }
       },
@@ -1477,6 +1490,13 @@
       "sha512": "sha512-XO9Zk1zIUv9FyuGg9biGlGTPrSamdZKSZ+lHGTxnOaKkTmW1iWP276nlQ/l2V3XoVk86+SHyRnzH5MmhULGamg==",
       "path": "autofac.extensions.dependencyinjection/4.4.0",
       "hashPath": "autofac.extensions.dependencyinjection.4.4.0.nupkg.sha512"
+    },
+    "AutoMapper/8.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YyGENUyP7CdOJcw2TCEMtkuRgj9iRFLHeACrfBEDPY5xIiTB/iDxNFdOy5br4abWR8KnSdQeK/x+GQLE7uiFtQ==",
+      "path": "automapper/8.1.0",
+      "hashPath": "automapper.8.1.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Authentication/2.2.0": {
       "type": "package",

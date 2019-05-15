@@ -11,11 +11,13 @@ using Microservice.Authentication.Services.Util;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
@@ -80,6 +82,7 @@ namespace Microservice.Authentication.Api
             services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
                 .AddJwtBearer(configureOptions =>
@@ -98,11 +101,19 @@ namespace Microservice.Authentication.Api
                 o.Password.RequireUppercase = false;
                 o.Password.RequireNonAlphanumeric = false;
                 o.Password.RequiredLength = 6;
+
+                // lockout
+                o.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                o.Lockout.MaxFailedAccessAttempts = 5;
+                o.Lockout.AllowedForNewUsers = true;
             });
-            builder = new IdentityBuilder(typeof(ApplicationUser), typeof(IdentityRole), services)
-                .AddRoleManager<RoleManager<IdentityRole>>()
-                .AddSignInManager<SignInManager<ApplicationUser>>()
-                .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            builder.AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+
+            services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<SignInManager<ApplicationUser>, SignInManager<ApplicationUser>>();
 
 
             // Add AutoFac
@@ -131,6 +142,7 @@ namespace Microservice.Authentication.Api
 
             AutoMapperConfig.Configure();
 
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

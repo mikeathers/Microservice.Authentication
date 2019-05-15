@@ -255,6 +255,10 @@ namespace Microservice.Authentication.Data.Migrations
 
                     b.Property<string>("PictureUrl");
 
+                    b.Property<string>("RefreshToken");
+
+                    b.Property<DateTime>("RefreshTokenExpiry");
+
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
