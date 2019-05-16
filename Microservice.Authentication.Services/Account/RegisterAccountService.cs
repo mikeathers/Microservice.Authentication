@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microservice.Authentication.Data.Configurations;
@@ -14,7 +13,6 @@ namespace Microservice.Authentication.Services.Account
 {
     public class RegisterAccountService : IRegisterAccountService
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
         private readonly IErrorFactory _errorFactory;
@@ -23,11 +21,10 @@ namespace Microservice.Authentication.Services.Account
 
         public StatusGenericHandler Status { get; }
 
-        public RegisterAccountService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, 
+        public RegisterAccountService(UserManager<ApplicationUser> userManager, 
             ApplicationDbContext context, IErrorFactory errorFactory, IMapper mapper, IJwtFactory jwtFactory)
         {
             Status = new StatusGenericHandler();
-            _signInManager = signInManager;
             _userManager = userManager;
             _context = context;
             _errorFactory = errorFactory;

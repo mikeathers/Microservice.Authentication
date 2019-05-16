@@ -21,6 +21,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
+
 namespace Microservice.Authentication.Api
 {
     public class Startup
@@ -50,7 +51,9 @@ namespace Microservice.Authentication.Api
             services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
             services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(connectionString, migrations => migrations.MigrationsAssembly(assembly)));
 
-            // Get options from app settings (issuer and intended audience)
+            services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
+
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
             // Configure JwtIssuerOptions
@@ -61,36 +64,37 @@ namespace Microservice.Authentication.Api
                 options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
             });
 
-            // JWT authentication validation parameters to dictate how we want received tokens validated. 
+            // Specify JWT validation params
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
                 ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
-
                 ValidateAudience = true,
                 ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
-
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = _signingKey,
-
                 RequireExpirationTime = false,
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };
 
-            // Adds JWT authentication to the request pipeline and specifies to use the default scheme.
+            // Add JWT Bearer Authentication
             services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(configureOptions =>
-                {
-                    configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
-                    configureOptions.TokenValidationParameters = tokenValidationParameters;
-                    configureOptions.SaveToken = true;
-                });
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(configureOptions =>
+            {
+                configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                configureOptions.TokenValidationParameters = tokenValidationParameters;
+                configureOptions.SaveToken = true;
+            });
+
+            // api user claim policy
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
+            //});
 
             // Add identity
             var builder = services.AddIdentityCore<ApplicationUser>(o =>
@@ -101,20 +105,11 @@ namespace Microservice.Authentication.Api
                 o.Password.RequireUppercase = false;
                 o.Password.RequireNonAlphanumeric = false;
                 o.Password.RequiredLength = 6;
-
-                // lockout
-                o.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                o.Lockout.MaxFailedAccessAttempts = 5;
-                o.Lockout.AllowedForNewUsers = true;
             });
-
             builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
-            builder.AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-
-
-            services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<SignInManager<ApplicationUser>, SignInManager<ApplicationUser>>();
-
+            builder.AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddSignInManager<SignInManager<ApplicationUser>>()
+                .AddDefaultTokenProviders();
 
             // Add AutoFac
             var containerBuilder = new ContainerBuilder();

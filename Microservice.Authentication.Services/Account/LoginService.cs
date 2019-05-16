@@ -12,7 +12,6 @@ namespace Microservice.Authentication.Services.Account
 {
     public class LoginService : ILoginService
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtFactory _jwtFactory;
         private readonly IErrorFactory _errorFactory;
@@ -20,11 +19,10 @@ namespace Microservice.Authentication.Services.Account
 
         public StatusGenericHandler Status { get; }
 
-        public LoginService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IJwtFactory jwtFactory, 
+        public LoginService(UserManager<ApplicationUser> userManager, IJwtFactory jwtFactory, 
             IErrorFactory errorFactory, ApplicationDbContext context)
         {
             Status = new StatusGenericHandler();
-            _signInManager = signInManager;
             _userManager = userManager;
             _jwtFactory = jwtFactory;
             _errorFactory = errorFactory;
@@ -40,9 +38,9 @@ namespace Microservice.Authentication.Services.Account
                 if (user == null) Status.AddError("Unable to login as this account does not exist.");
                 if (Status.HasErrors) return null;
 
-                var userSignedIn = await _signInManager.PasswordSignInAsync(user, loginDto.Password, false, false);
+                var userSignedIn = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 
-                if (userSignedIn.Succeeded)
+                if (userSignedIn)
                 {
                     var accountDto = await RetrieveUserAccount.Get(user, _jwtFactory);
                     return accountDto;

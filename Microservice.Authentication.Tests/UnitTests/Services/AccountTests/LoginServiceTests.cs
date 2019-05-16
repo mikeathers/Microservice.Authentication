@@ -4,7 +4,7 @@ using Microservice.Authentication.Data.Models.User;
 using Microservice.Authentication.Dtos.Account;
 using Microservice.Authentication.Services.Account;
 using Microservice.Authentication.Tests.Fixtures;
-using Microsoft.AspNetCore.Identity;
+using Microservice.Authentication.Tests.SeedData;
 using Moq;
 using TestSupport.EfHelpers;
 using Xunit;
@@ -12,17 +12,17 @@ using Xunit.Extensions.AssertExtensions;
 
 namespace Microservice.Authentication.Tests.UnitTests.Services.Account
 {
-    public class RegisterAccountServiceTests : IClassFixture<AccountServicesTestsFixture>
+    public class LoginServiceTests : IClassFixture<AccountServicesTestsFixture>
     {
         private readonly AccountServicesTestsFixture _fixture;
 
-        public RegisterAccountServiceTests(AccountServicesTestsFixture fixture)
+        public LoginServiceTests(AccountServicesTestsFixture fixture)
         {
             _fixture = fixture;
         }
 
         [Fact]
-        public async Task Should_UseUserManager_ToRegister_Account()
+        public async Task Should_UseUserManager_ToFindUser()
         {
             var options = SqliteInMemory.CreateOptions<ApplicationDbContext>();
             using (var context = new ApplicationDbContext(options))
@@ -30,10 +30,8 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 // Arrange
                 context.Database.EnsureCreated();
 
-                var accountToCreate = new RegisterDto
+                var loginInfo = new LoginDto
                 {
-                    FirstName = "Test",
-                    LastName = "User",
                     Email = "test.user@gmail.com",
                     Password = "Password123!"
                 };
@@ -42,42 +40,38 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 var store = _fixture.UserStoreMock;
 
                 var userManagerMock = _fixture.UserManagerMock;
-                userManagerMock.Setup(m => m.CreateAsync(user.Object, "Password123!")).Returns(Task.FromResult(IdentityResult.Success));
+                userManagerMock.Setup(m => m.FindByNameAsync(loginInfo.Email)).Returns(Task.FromResult(user.Object));
 
                 var errorFactoryMock = _fixture.ErrorFactoryMock;
-
-                var mapperMock = _fixture.MapperMock;
-                mapperMock.Setup(m => m.Map<RegisterDto, ApplicationUser>(accountToCreate)).Returns(user.Object);
 
                 var jwtFactoryMock = _fixture.JwtFactoryMock;
                 jwtFactoryMock.Setup(m => m.GenerateRefreshToken()).Returns("9090909090");
                 jwtFactoryMock.Setup(m => m.GenerateToken(user.Object)).Returns(value: Task.FromResult("930dkdkdkd"));
 
-                var sut = new RegisterAccountService(userManagerMock.Object, context, errorFactoryMock.Object, mapperMock.Object, jwtFactoryMock.Object); 
+                var sut = new LoginService(userManagerMock.Object, jwtFactoryMock.Object, errorFactoryMock.Object, context);
 
                 // Act
-                await sut.RegisterAccount(accountToCreate);
+                await sut.Login(loginInfo);
 
                 //Assert
-                userManagerMock.Verify(m => m.CreateAsync(user.Object, "Password123!"), Times.Once);
+                userManagerMock.Verify(m => m.FindByNameAsync(loginInfo.Email), Times.Once);
 
             }
         }
 
         [Fact]
-        public async Task Should_ReturnAccountDto_OnCompletion()
+        public async Task Should_UseUserManager_ToSignInUser()
         {
             var options = SqliteInMemory.CreateOptions<ApplicationDbContext>();
             using (var context = new ApplicationDbContext(options))
             {
                 // Arrange
                 context.Database.EnsureCreated();
+                context.SeedUserData();
 
-                var accountToCreate = new RegisterDto
+                var loginInfo = new LoginDto
                 {
-                    FirstName = "Test",
-                    LastName = "User",
-                    Email = "test.user@gmail.com",
+                    Email = "test@test.com",
                     Password = "Password123!"
                 };
 
@@ -85,30 +79,29 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 var store = _fixture.UserStoreMock;
 
                 var userManagerMock = _fixture.UserManagerMock;
-                userManagerMock.Setup(m => m.CreateAsync(user.Object, "Password123!")).Returns(Task.FromResult(IdentityResult.Success));
+                userManagerMock.Setup(m => m.FindByNameAsync(loginInfo.Email)).Returns(Task.FromResult(user.Object));
+                userManagerMock.Setup(m => m.CheckPasswordAsync(user.Object, loginInfo.Password))
+                    .Returns(Task.FromResult(true));
 
                 var errorFactoryMock = _fixture.ErrorFactoryMock;
-
-                var mapperMock = _fixture.MapperMock;
-                mapperMock.Setup(m => m.Map<RegisterDto, ApplicationUser>(accountToCreate)).Returns(user.Object);
 
                 var jwtFactoryMock = _fixture.JwtFactoryMock;
                 jwtFactoryMock.Setup(m => m.GenerateRefreshToken()).Returns("9090909090");
                 jwtFactoryMock.Setup(m => m.GenerateToken(user.Object)).Returns(value: Task.FromResult("930dkdkdkd"));
 
-                var sut = new RegisterAccountService(userManagerMock.Object, context, errorFactoryMock.Object, mapperMock.Object, jwtFactoryMock.Object);
+                var sut = new LoginService(userManagerMock.Object, jwtFactoryMock.Object, errorFactoryMock.Object, context);
 
                 // Act
-                var accountDto = await sut.RegisterAccount(accountToCreate);
+                await sut.Login(loginInfo);
 
                 //Assert
-                accountDto.ShouldNotBeNull();
+                userManagerMock.Verify(m => m.CheckPasswordAsync(user.Object, loginInfo.Password), Times.Once);
 
             }
         }
 
         [Fact]
-        public async Task Should_HaveErrors_When_UserNotProvided()
+        public async Task Should_HaveErrors_WhenUser_NotFound()
         {
             var options = SqliteInMemory.CreateOptions<ApplicationDbContext>();
             using (var context = new ApplicationDbContext(options))
@@ -116,10 +109,8 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 // Arrange
                 context.Database.EnsureCreated();
 
-                var accountToCreate = new RegisterDto
+                var loginInfo = new LoginDto
                 {
-                    FirstName = "Test",
-                    LastName = "User",
                     Email = "test.user@gmail.com",
                     Password = "Password123!"
                 };
@@ -128,21 +119,18 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 var store = _fixture.UserStoreMock;
 
                 var userManagerMock = _fixture.UserManagerMock;
-                userManagerMock.Setup(m => m.CreateAsync(null, "Password123!")).Returns(Task.FromResult(IdentityResult.Success));
+                userManagerMock.Setup(m => m.FindByNameAsync(loginInfo.Email)).Returns(Task.FromResult((ApplicationUser)null));
 
                 var errorFactoryMock = _fixture.ErrorFactoryMock;
-
-                var mapperMock = _fixture.MapperMock;
-                mapperMock.Setup(m => m.Map<RegisterDto, ApplicationUser>(accountToCreate)).Returns(user.Object);
 
                 var jwtFactoryMock = _fixture.JwtFactoryMock;
                 jwtFactoryMock.Setup(m => m.GenerateRefreshToken()).Returns("9090909090");
                 jwtFactoryMock.Setup(m => m.GenerateToken(user.Object)).Returns(value: Task.FromResult("930dkdkdkd"));
 
-                var sut = new RegisterAccountService(userManagerMock.Object, context, errorFactoryMock.Object, mapperMock.Object, jwtFactoryMock.Object);
+                var sut = new LoginService(userManagerMock.Object, jwtFactoryMock.Object, errorFactoryMock.Object, context);
 
                 // Act
-                await sut.RegisterAccount(accountToCreate);
+                await sut.Login(loginInfo);
 
                 //Assert
                 sut.Status.HasErrors.ShouldBeTrue();
@@ -151,41 +139,37 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
         }
 
         [Fact]
-        public async Task Should_HaveErrors_When_PasswordNotProvided()
+        public async Task Should_HaveErrors_WhenPassword_Incorrect()
         {
             var options = SqliteInMemory.CreateOptions<ApplicationDbContext>();
             using (var context = new ApplicationDbContext(options))
             {
                 // Arrange
                 context.Database.EnsureCreated();
+                context.SeedUserData();
 
-                var accountToCreate = new RegisterDto
+                var loginInfo = new LoginDto
                 {
-                    FirstName = "Test",
-                    LastName = "User",
-                    Email = "test.user@gmail.com",
-                    Password = "Password123!"
+                    Email = "test@test.com",
+                    Password = "Password123!22222"
                 };
 
                 var user = _fixture.UserMock;
                 var store = _fixture.UserStoreMock;
 
                 var userManagerMock = _fixture.UserManagerMock;
-                userManagerMock.Setup(m => m.CreateAsync(user.Object, null)).Returns(Task.FromResult(IdentityResult.Success));
+                userManagerMock.Setup(m => m.FindByNameAsync(loginInfo.Email)).Returns(Task.FromResult(user.Object));
 
                 var errorFactoryMock = _fixture.ErrorFactoryMock;
-
-                var mapperMock = _fixture.MapperMock;
-                mapperMock.Setup(m => m.Map<RegisterDto, ApplicationUser>(accountToCreate)).Returns(user.Object);
 
                 var jwtFactoryMock = _fixture.JwtFactoryMock;
                 jwtFactoryMock.Setup(m => m.GenerateRefreshToken()).Returns("9090909090");
                 jwtFactoryMock.Setup(m => m.GenerateToken(user.Object)).Returns(value: Task.FromResult("930dkdkdkd"));
 
-                var sut = new RegisterAccountService(userManagerMock.Object, context, errorFactoryMock.Object, mapperMock.Object, jwtFactoryMock.Object);
+                var sut = new LoginService(userManagerMock.Object, jwtFactoryMock.Object, errorFactoryMock.Object, context);
 
                 // Act
-                await sut.RegisterAccount(accountToCreate);
+                await sut.Login(loginInfo);
 
                 //Assert
                 sut.Status.HasErrors.ShouldBeTrue();

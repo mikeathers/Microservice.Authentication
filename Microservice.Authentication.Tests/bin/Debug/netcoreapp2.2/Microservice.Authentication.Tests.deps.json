@@ -3056,6 +3056,7 @@
           "Microservice.Authentication.Dtos": "1.0.0",
           "Microservice.Authentication.Factories": "1.0.0",
           "Microservice.Authentication.Services": "1.0.0",
+          "Microsoft.AspNetCore.Authorization": "2.2.0",
           "Microsoft.AspNetCore.Identity": "2.2.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.2.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.2.0",
@@ -3116,7 +3117,8 @@
           "AutoMapper": "8.1.0",
           "Autofac.Extensions.DependencyInjection": "4.4.0",
           "Microservice.Authentication.Data": "1.0.0",
-          "Microservice.Authentication.Interfaces": "1.0.0"
+          "Microservice.Authentication.Interfaces": "1.0.0",
+          "Microsoft.AspNetCore.Authorization": "2.2.0"
         },
         "runtime": {
           "Microservice.Authentication.Services.dll": {}
