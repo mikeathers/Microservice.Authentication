@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "7907f6a3a322492ceba99064178e23272fd09b08"
+    "signature": "a30ac8c4ec3e4cb7c50b33115a6863cfde72b7df"
   },
   "compilationOptions": {
     "defines": [
@@ -649,6 +649,20 @@
           "lib/netstandard1.0/Remotion.Linq.dll": {}
         }
       },
+      "Sendgrid/9.11.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/SendGrid.dll": {
+            "assemblyVersion": "9.11.0.0",
+            "fileVersion": "9.11.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/SendGrid.dll": {}
+        }
+      },
       "Serilog/2.8.0": {
         "dependencies": {
           "System.Collections.NonGeneric": "4.3.0"
@@ -1113,7 +1127,8 @@
       "Microservice.Authentication.Interfaces/1.0.0": {
         "dependencies": {
           "Microservice.Authentication.Data": "1.0.0",
-          "Microservice.Authentication.Dtos": "1.0.0"
+          "Microservice.Authentication.Dtos": "1.0.0",
+          "Sendgrid": "9.11.0"
         },
         "runtime": {
           "Microservice.Authentication.Interfaces.dll": {}
@@ -1128,7 +1143,8 @@
           "Autofac.Extensions.DependencyInjection": "4.4.0",
           "Microservice.Authentication.Data": "1.0.0",
           "Microservice.Authentication.Interfaces": "1.0.0",
-          "Microsoft.AspNetCore.Authorization": "2.2.0"
+          "Microsoft.AspNetCore.Authorization": "2.2.0",
+          "Sendgrid": "9.11.0"
         },
         "runtime": {
           "Microservice.Authentication.Services.dll": {}
@@ -4160,6 +4176,13 @@
       "sha512": "sha512-twDAH8dAXXCAf3sRv1Tf94u66eEHvgU75hfn1nn2v4fSWXD50XoDOAk8WpSrbViNuMkB4kN1ElnOGm1c519IHg==",
       "path": "remotion.linq/2.2.0",
       "hashPath": "remotion.linq.2.2.0.nupkg.sha512"
+    },
+    "Sendgrid/9.11.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kzsw6uocRa3YWpH9HXVCOeEtlM4ky3YfW0CuW20AWgXe+gzQW7TsKGGgD1Y//EMti0kufST4lZ+tnqNCkEPh2A==",
+      "path": "sendgrid/9.11.0",
+      "hashPath": "sendgrid.9.11.0.nupkg.sha512"
     },
     "Serilog/2.8.0": {
       "type": "package",

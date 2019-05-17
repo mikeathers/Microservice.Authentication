@@ -48,6 +48,7 @@ namespace Microservice.Authentication.Api
             var secretKey = Configuration.GetSection(nameof(SecurityKey)).ToString();
             var _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
+            services.Configure<SendGridSettings>(Configuration.GetSection("SendGridSettings"));
             services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
             services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(connectionString, migrations => migrations.MigrationsAssembly(assembly)));
 

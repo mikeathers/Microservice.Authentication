@@ -8,3 +8,4 @@ C:\Development\Development\Projects\Microservice.Authentication\Microservice.Aut
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Data\bin\Debug\netcoreapp2.2\Microservice.Authentication.Data.pdb
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Data\obj\Debug\netcoreapp2.2\Microservice.Authentication.Data.dll
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Data\obj\Debug\netcoreapp2.2\Microservice.Authentication.Data.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Data\obj\Debug\netcoreapp2.2\Microservice.Authentication.Data.csprojAssemblyReference.cache

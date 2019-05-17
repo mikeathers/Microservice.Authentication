@@ -16,17 +16,19 @@ namespace Microservice.Authentication.Services.Account
         private readonly IJwtFactory _jwtFactory;
         private readonly IErrorFactory _errorFactory;
         private readonly ApplicationDbContext _context;
+        private readonly IRetrieveAuthenticatedUserService _retrieveAuthenticatedUserService;
 
         public StatusGenericHandler Status { get; }
 
         public LoginService(UserManager<ApplicationUser> userManager, IJwtFactory jwtFactory, 
-            IErrorFactory errorFactory, ApplicationDbContext context)
+            IErrorFactory errorFactory, ApplicationDbContext context, IRetrieveAuthenticatedUserService retrieveAuthenticatedUserService)
         {
             Status = new StatusGenericHandler();
             _userManager = userManager;
             _jwtFactory = jwtFactory;
             _errorFactory = errorFactory;
             _context = context;
+            _retrieveAuthenticatedUserService = retrieveAuthenticatedUserService;
         }
 
         public async Task<AccountDto> Login(LoginDto loginDto)
@@ -42,7 +44,7 @@ namespace Microservice.Authentication.Services.Account
 
                 if (userSignedIn)
                 {
-                    var accountDto = await RetrieveUserAccount.Get(user, _jwtFactory);
+                    var accountDto = await _retrieveAuthenticatedUserService.Get(user, _jwtFactory);
                     return accountDto;
                 }
 

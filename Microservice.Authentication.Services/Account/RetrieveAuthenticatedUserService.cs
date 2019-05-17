@@ -1,14 +1,15 @@
 ﻿using System.Threading.Tasks;
 using Microservice.Authentication.Data.Models.User;
 using Microservice.Authentication.Dtos.Account;
+using Microservice.Authentication.Interfaces.Account;
 using Microservice.Authentication.Interfaces.Factories;
 
 namespace Microservice.Authentication.Services.Account
 {
-    public static class RetrieveUserAccount
+    public class RetrieveAuthenticatedUserService : IRetrieveAuthenticatedUserService
     {
         
-        public async static Task<AccountDto> Get(ApplicationUser user, IJwtFactory jwtFactory)
+        public async Task<AccountDto> Get(ApplicationUser user, IJwtFactory jwtFactory)
         {
             var token = await jwtFactory.GenerateToken(user);
             var refreshToken = jwtFactory.GenerateRefreshToken();

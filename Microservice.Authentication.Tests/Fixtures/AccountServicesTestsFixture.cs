@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microservice.Authentication.Data.Models.User;
+using Microservice.Authentication.Interfaces.Account;
 using Microservice.Authentication.Interfaces.Factories;
+using Microservice.Authentication.Interfaces.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Moq;
@@ -9,13 +11,16 @@ namespace Microservice.Authentication.Tests.Fixtures
 {
     public class AccountServicesTestsFixture
     {
-        public Mock<ApplicationUser> UserMock { get; set; }
-        public Mock<IUserStore<ApplicationUser>> UserStoreMock { get; set; }
-        public Mock<UserManager<ApplicationUser>> UserManagerMock { get; set; }
-        public Mock<SignInManager<ApplicationUser>> SignInManagerMock { get; set; }
-        public Mock<IErrorFactory> ErrorFactoryMock { get; set; }
-        public Mock<IMapper> MapperMock { get; set; }
-        public Mock<IJwtFactory> JwtFactoryMock { get; set; }
+        public Mock<ApplicationUser> UserMock { get; private set; }
+        public Mock<IUserStore<ApplicationUser>> UserStoreMock { get; private set; }
+        public Mock<UserManager<ApplicationUser>> UserManagerMock { get; private set; }
+        public Mock<SignInManager<ApplicationUser>> SignInManagerMock { get; private set; }
+        public Mock<IErrorFactory> ErrorFactoryMock { get; private set; }
+        public Mock<IMapper> MapperMock { get; private set; }
+        public Mock<IJwtFactory> JwtFactoryMock { get; private set; }
+        public Mock<ISendEmailService> SendEmailServiceMock { get; private set; }
+        public Mock<IRetrieveAuthenticatedUserService> RetrieveAuthenticatedUserServiceMock { get; set; }
+        public Mock<IConfirmationEmailService> ConfirmationEmailServiceMock { get; set; }
 
         public AccountServicesTestsFixture()
         {
@@ -42,10 +47,14 @@ namespace Microservice.Authentication.Tests.Fixtures
             var errorFactoryMock = new Mock<IErrorFactory>();
 
             var mapperMock = new Mock<IMapper>();
-            
 
             var jwtFactoryMock = new Mock<IJwtFactory>();
-            
+
+            var sendEmailMock = new Mock<ISendEmailService>();
+
+            var retrieveAuthenticatedUserServiceMock = new Mock<IRetrieveAuthenticatedUserService>();
+
+            var confirmationEmailServiceMock = new Mock<IConfirmationEmailService>();
 
             UserMock = user;
             UserStoreMock = store;
@@ -54,6 +63,9 @@ namespace Microservice.Authentication.Tests.Fixtures
             ErrorFactoryMock = errorFactoryMock;
             MapperMock = mapperMock;
             JwtFactoryMock = jwtFactoryMock;
+            SendEmailServiceMock = sendEmailMock;
+            RetrieveAuthenticatedUserServiceMock = retrieveAuthenticatedUserServiceMock;
+            ConfirmationEmailServiceMock = confirmationEmailServiceMock;
         }
     }
 }

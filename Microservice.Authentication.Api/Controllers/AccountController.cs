@@ -22,12 +22,12 @@ namespace Microservice.Authentication.Api.Controllers
 
             if (validatorResult.IsValid)
             {
-                var registeredUser = await service.RegisterAccount(registerDto);
+                await service.RegisterAccount(registerDto);
                 if (!service.Status.HasErrors)
                 {
-                    return new OkObjectResult(new ResultObjectDto(false, registeredUser));
+                    return new OkObjectResult(new ResultObjectDto(false, null));
                 }
-                return new BadRequestObjectResult(new ResultObjectDto(true, registeredUser, service.Status.Errors));
+                return new BadRequestObjectResult(new ResultObjectDto(true, null, service.Status.Errors));
             }
 
             var validationErrors = validatorResult.Errors.Select(error => new ValidationResult(error.ErrorMessage))

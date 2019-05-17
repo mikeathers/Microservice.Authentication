@@ -8,7 +8,7 @@ namespace Microservice.Authentication.Interfaces.Account
     {
         StatusGenericHandler Status { get; }
 
-        Task<AccountDto> RegisterAccount(RegisterDto registerDto);
+        Task RegisterAccount(RegisterDto registerDto);
 
     }
 }

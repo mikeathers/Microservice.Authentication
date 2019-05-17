@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "6c283e9b0cf1098deb5df2f9f4c49bf8c4335550"
+    "signature": "977880482581695ee2a0d3850ae2f3c5aa14bbfb"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,7 +9,8 @@
       "Microservice.Authentication.Interfaces/1.0.0": {
         "dependencies": {
           "Microservice.Authentication.Data": "1.0.0",
-          "Microservice.Authentication.Dtos": "1.0.0"
+          "Microservice.Authentication.Dtos": "1.0.0",
+          "Sendgrid": "9.11.0"
         },
         "runtime": {
           "Microservice.Authentication.Interfaces.dll": {}
@@ -759,6 +760,17 @@
           "runtime/ubuntu.16.10-x64/native/_._": {
             "rid": "ubuntu.16.10-x64",
             "assetType": "native"
+          }
+        }
+      },
+      "Sendgrid/9.11.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/SendGrid.dll": {
+            "assemblyVersion": "9.11.0.0",
+            "fileVersion": "9.11.0.0"
           }
         }
       },
@@ -1909,6 +1921,13 @@
       "sha512": "sha512-VB5cn/7OzUfzdnC8tqAIMQciVLiq2epm2NrAm1E9OjNRyG4lVhfR61SMcLizejzQP8R8Uf/0l5qOIbUEi+RdEg==",
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.0",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512"
+    },
+    "Sendgrid/9.11.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kzsw6uocRa3YWpH9HXVCOeEtlM4ky3YfW0CuW20AWgXe+gzQW7TsKGGgD1Y//EMti0kufST4lZ+tnqNCkEPh2A==",
+      "path": "sendgrid/9.11.0",
+      "hashPath": "sendgrid.9.11.0.nupkg.sha512"
     },
     "System.Buffers/4.5.0": {
       "type": "package",

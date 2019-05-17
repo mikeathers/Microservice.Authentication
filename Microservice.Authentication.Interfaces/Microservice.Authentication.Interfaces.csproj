@@ -9,6 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Sendgrid" Version="9.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Microservice.Authentication.Data\Microservice.Authentication.Data.csproj" />
     <ProjectReference Include="..\Microservice.Authentication.Dtos\Microservice.Authentication.Dtos.csproj" />
   </ItemGroup>

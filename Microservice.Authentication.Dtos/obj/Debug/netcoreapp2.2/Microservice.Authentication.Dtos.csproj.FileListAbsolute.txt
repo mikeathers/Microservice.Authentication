@@ -6,3 +6,4 @@ C:\Development\Development\Projects\Microservice.Authentication\Microservice.Aut
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Dtos\obj\Debug\netcoreapp2.2\Microservice.Authentication.Dtos.AssemblyInfo.cs
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Dtos\obj\Debug\netcoreapp2.2\Microservice.Authentication.Dtos.dll
 C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Dtos\obj\Debug\netcoreapp2.2\Microservice.Authentication.Dtos.pdb
+C:\Development\Development\Projects\Microservice.Authentication\Microservice.Authentication.Dtos\obj\Debug\netcoreapp2.2\Microservice.Authentication.Dtos.csprojAssemblyReference.cache

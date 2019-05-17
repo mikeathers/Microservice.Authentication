@@ -48,7 +48,10 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 jwtFactoryMock.Setup(m => m.GenerateRefreshToken()).Returns("9090909090");
                 jwtFactoryMock.Setup(m => m.GenerateToken(user.Object)).Returns(value: Task.FromResult("930dkdkdkd"));
 
-                var sut = new LoginService(userManagerMock.Object, jwtFactoryMock.Object, errorFactoryMock.Object, context);
+                var retrieveAuthenticatedUserService = _fixture.RetrieveAuthenticatedUserServiceMock;
+
+                var sut = new LoginService(userManagerMock.Object, jwtFactoryMock.Object,
+                    errorFactoryMock.Object, context, retrieveAuthenticatedUserService.Object);
 
                 // Act
                 await sut.Login(loginInfo);
@@ -89,7 +92,10 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 jwtFactoryMock.Setup(m => m.GenerateRefreshToken()).Returns("9090909090");
                 jwtFactoryMock.Setup(m => m.GenerateToken(user.Object)).Returns(value: Task.FromResult("930dkdkdkd"));
 
-                var sut = new LoginService(userManagerMock.Object, jwtFactoryMock.Object, errorFactoryMock.Object, context);
+                var retrieveAuthenticatedUserService = _fixture.RetrieveAuthenticatedUserServiceMock;
+
+                var sut = new LoginService(userManagerMock.Object, jwtFactoryMock.Object,
+                    errorFactoryMock.Object, context, retrieveAuthenticatedUserService.Object);
 
                 // Act
                 await sut.Login(loginInfo);
@@ -127,7 +133,10 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 jwtFactoryMock.Setup(m => m.GenerateRefreshToken()).Returns("9090909090");
                 jwtFactoryMock.Setup(m => m.GenerateToken(user.Object)).Returns(value: Task.FromResult("930dkdkdkd"));
 
-                var sut = new LoginService(userManagerMock.Object, jwtFactoryMock.Object, errorFactoryMock.Object, context);
+                var retrieveAuthenticatedUserService = _fixture.RetrieveAuthenticatedUserServiceMock;
+
+                var sut = new LoginService(userManagerMock.Object, jwtFactoryMock.Object,
+                    errorFactoryMock.Object, context, retrieveAuthenticatedUserService.Object);
 
                 // Act
                 await sut.Login(loginInfo);
@@ -166,7 +175,10 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 jwtFactoryMock.Setup(m => m.GenerateRefreshToken()).Returns("9090909090");
                 jwtFactoryMock.Setup(m => m.GenerateToken(user.Object)).Returns(value: Task.FromResult("930dkdkdkd"));
 
-                var sut = new LoginService(userManagerMock.Object, jwtFactoryMock.Object, errorFactoryMock.Object, context);
+                var retrieveAuthenticatedUserService = _fixture.RetrieveAuthenticatedUserServiceMock;
+
+                var sut = new LoginService(userManagerMock.Object, jwtFactoryMock.Object,
+                    errorFactoryMock.Object, context, retrieveAuthenticatedUserService.Object);
 
                 // Act
                 await sut.Login(loginInfo);
