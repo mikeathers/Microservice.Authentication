@@ -9,7 +9,7 @@ namespace Microservice.Authentication.Api.Util
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(GetType().GetTypeInfo().Assembly)
-                .Where(type => type.Name.EndsWith("Manager"))
+                .Where(type => type.Name.EndsWith("Service"))
                 .AsImplementedInterfaces();
         }
     }

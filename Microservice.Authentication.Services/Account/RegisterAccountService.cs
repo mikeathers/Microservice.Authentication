@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using AutoMapper;
 using Microservice.Authentication.Data.Configurations;
 using Microservice.Authentication.Data.Models.User;
@@ -20,13 +20,13 @@ namespace Microservice.Authentication.Services.Account
         private readonly IErrorFactory _errorFactory;
         private readonly IMapper _mapper;
         private readonly ISendEmailService _sendEmailService;
-        private readonly IConfirmationEmailService _confimationEmailService;
+        private readonly IGenerateAccountEmailsService _confimationEmailService;
 
         public StatusGenericHandler Status { get; }
 
         public RegisterAccountService(UserManager<ApplicationUser> userManager, 
             ApplicationDbContext context, IErrorFactory errorFactory, IMapper mapper, 
-            ISendEmailService sendEmailService, IConfirmationEmailService confirmationEmailService)
+            ISendEmailService sendEmailService, IGenerateAccountEmailsService confirmationEmailService)
         {
             Status = new StatusGenericHandler();
             _userManager = userManager;
@@ -49,8 +49,10 @@ namespace Microservice.Authentication.Services.Account
                     if (userCreated.Succeeded)
                     {
                         var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        emailConfirmationToken = HttpUtility.UrlEncode(emailConfirmationToken);
+
                         var confirmationEmail =
-                            _confimationEmailService.Create(registerDto.FirstName, user.Id, emailConfirmationToken);
+                            _confimationEmailService.ConfirmationEmail(registerDto.FirstName, user.Id, emailConfirmationToken);
 
                         await _sendEmailService.SendAsync(user.Email, "Confirm your account", confirmationEmail,
                             registerDto.FirstName);

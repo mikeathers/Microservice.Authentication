@@ -3,6 +3,7 @@ using Microservice.Authentication.Data.Configurations;
 using Microservice.Authentication.Data.Models.User;
 using Microservice.Authentication.Dtos.Account;
 using Microservice.Authentication.Interfaces.Generic;
+using Microservice.Authentication.Interfaces.Shared;
 using Microservice.Authentication.Services.Account;
 using Microservice.Authentication.Tests.Fixtures;
 using Microsoft.AspNetCore.Identity;
@@ -40,9 +41,8 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 };
 
                 var user = _fixture.UserMock;
-                var store = _fixture.UserStoreMock;
-
-                var userManagerMock = _fixture.UserManagerMock;
+                var store = new Mock<IUserStore<ApplicationUser>>();
+                var userManagerMock = new Mock<UserManager<ApplicationUser>>(store.Object, null, null, null, null, null, null, null, null);
                 userManagerMock.Setup(m => m.CreateAsync(user.Object, "Password123!")).Returns(Task.FromResult(IdentityResult.Success));
 
                 var errorFactoryMock = _fixture.ErrorFactoryMock;
@@ -50,7 +50,7 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 var mapperMock = _fixture.MapperMock;
                 mapperMock.Setup(m => m.Map<RegisterDto, ApplicationUser>(accountToCreate)).Returns(user.Object);
 
-                var sendEmailServiceMock = _fixture.SendEmailServiceMock;
+                var sendEmailServiceMock = new Mock<ISendEmailService>();
                 var confirmationEmailServiceMock = _fixture.ConfirmationEmailServiceMock;
 
                 var sut = new RegisterAccountService(userManagerMock.Object, context, 
@@ -90,10 +90,9 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 var user = _fixture.UserMock;
                 user.Setup(m => m.Id).Returns(userId);
                 user.Setup(m => m.Email).Returns(accountToCreate.Email);
-                
-                var store = _fixture.UserStoreMock;
 
-                var userManagerMock = _fixture.UserManagerMock;
+                var store = new Mock<IUserStore<ApplicationUser>>();
+                var userManagerMock = new Mock<UserManager<ApplicationUser>>(store.Object, null, null, null, null, null, null, null, null);
                 userManagerMock.Setup(m => m.CreateAsync(user.Object, "Password123!")).Returns(Task.FromResult(IdentityResult.Success));
                 userManagerMock.Setup(m => m.GenerateEmailConfirmationTokenAsync(user.Object))
                     .Returns(Task.FromResult(emailConfirmationCode));
@@ -102,13 +101,13 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
 
                 var mapperMock = _fixture.MapperMock;
                 mapperMock.Setup(m => m.Map<RegisterDto, ApplicationUser>(accountToCreate)).Returns(user.Object);
-                
-                var sendEmailServiceMock = _fixture.SendEmailServiceMock;
+
+                var sendEmailServiceMock = new Mock<ISendEmailService>();
                 sendEmailServiceMock.Setup(m => m.SendAsync(accountToCreate.Email, "Confirm your account", confirmationEmail, accountToCreate.FirstName));
                 sendEmailServiceMock.Setup(m => m.Status).Returns(new StatusGenericHandler());
 
                 var confirmationEmailServiceMock = _fixture.ConfirmationEmailServiceMock;
-                confirmationEmailServiceMock.Setup(m => m.Create(accountToCreate.FirstName, userId, emailConfirmationCode)).Returns(confirmationEmail);
+                confirmationEmailServiceMock.Setup(m => m.ConfirmationEmail(accountToCreate.FirstName, userId, emailConfirmationCode)).Returns(confirmationEmail);
 
                 var sut = new RegisterAccountService(userManagerMock.Object, context,
                     errorFactoryMock.Object, mapperMock.Object, sendEmailServiceMock.Object,
@@ -149,9 +148,8 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 user.Setup(m => m.Id).Returns(userId);
                 user.Setup(m => m.Email).Returns(accountToCreate.Email);
 
-                var store = _fixture.UserStoreMock;
-
-                var userManagerMock = _fixture.UserManagerMock;
+                var store = new Mock<IUserStore<ApplicationUser>>();
+                var userManagerMock = new Mock<UserManager<ApplicationUser>>(store.Object, null, null, null, null, null, null, null, null);
                 userManagerMock.Setup(m => m.CreateAsync(user.Object, "Password123!")).Returns(Task.FromResult(IdentityResult.Success));
                 userManagerMock.Setup(m => m.GenerateEmailConfirmationTokenAsync(user.Object))
                     .Returns(Task.FromResult(emailConfirmationCode));
@@ -161,12 +159,12 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 var mapperMock = _fixture.MapperMock;
                 mapperMock.Setup(m => m.Map<RegisterDto, ApplicationUser>(accountToCreate)).Returns(user.Object);
 
-                var sendEmailServiceMock = _fixture.SendEmailServiceMock;
+                var sendEmailServiceMock = new Mock<ISendEmailService>();
                 sendEmailServiceMock.Setup(m => m.SendAsync("", "", "", ""));
                 sendEmailServiceMock.Setup(m => m.Status).Returns(new StatusGenericHandler());
 
                 var confirmationEmailServiceMock = _fixture.ConfirmationEmailServiceMock;
-                confirmationEmailServiceMock.Setup(m => m.Create(accountToCreate.FirstName, userId, emailConfirmationCode)).Returns(confirmationEmail);
+                confirmationEmailServiceMock.Setup(m => m.ConfirmationEmail(accountToCreate.FirstName, userId, emailConfirmationCode)).Returns(confirmationEmail);
 
                 var sut = new RegisterAccountService(userManagerMock.Object, context,
                     errorFactoryMock.Object, mapperMock.Object, sendEmailServiceMock.Object,
@@ -176,7 +174,7 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 await sut.RegisterAccount(accountToCreate);
 
                 //Assert
-                confirmationEmailServiceMock.Verify(m => m.Create(accountToCreate.FirstName, userId, emailConfirmationCode), Times.Once);
+                confirmationEmailServiceMock.Verify(m => m.ConfirmationEmail(accountToCreate.FirstName, userId, emailConfirmationCode), Times.Once);
 
             }
         }
@@ -199,17 +197,16 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 };
 
                 var user = _fixture.UserMock;
-                var store = _fixture.UserStoreMock;
-
-                var userManagerMock = _fixture.UserManagerMock;
+                var store = new Mock<IUserStore<ApplicationUser>>();
+                var userManagerMock = new Mock<UserManager<ApplicationUser>>(store.Object, null, null, null, null, null, null, null, null);
                 userManagerMock.Setup(m => m.CreateAsync(null, "Password123!")).Returns(Task.FromResult(IdentityResult.Success));
 
                 var errorFactoryMock = _fixture.ErrorFactoryMock;
 
                 var mapperMock = _fixture.MapperMock;
                 mapperMock.Setup(m => m.Map<RegisterDto, ApplicationUser>(accountToCreate)).Returns(user.Object);
-                
-                var sendEmailServiceMock = _fixture.SendEmailServiceMock;
+
+                var sendEmailServiceMock = new Mock<ISendEmailService>();
                 var confirmationEmailServiceMock = _fixture.ConfirmationEmailServiceMock;
 
                 var sut = new RegisterAccountService(userManagerMock.Object, context,
@@ -243,17 +240,16 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 };
 
                 var user = _fixture.UserMock;
-                var store = _fixture.UserStoreMock;
-
-                var userManagerMock = _fixture.UserManagerMock;
+                var store = new Mock<IUserStore<ApplicationUser>>();
+                var userManagerMock = new Mock<UserManager<ApplicationUser>>(store.Object, null, null, null, null, null, null, null, null);
                 userManagerMock.Setup(m => m.CreateAsync(user.Object, null)).Returns(Task.FromResult(IdentityResult.Success));
 
                 var errorFactoryMock = _fixture.ErrorFactoryMock;
 
                 var mapperMock = _fixture.MapperMock;
                 mapperMock.Setup(m => m.Map<RegisterDto, ApplicationUser>(accountToCreate)).Returns(user.Object);
-                
-                var sendEmailServiceMock = _fixture.SendEmailServiceMock;
+
+                var sendEmailServiceMock = new Mock<ISendEmailService>();
                 var confirmationEmailServiceMock = _fixture.ConfirmationEmailServiceMock;
 
                 var sut = new RegisterAccountService(userManagerMock.Object, context,

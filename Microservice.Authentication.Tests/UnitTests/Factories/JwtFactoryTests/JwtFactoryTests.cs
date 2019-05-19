@@ -18,9 +18,14 @@ namespace Microservice.Authentication.Tests.UnitTests.Factories.JwtFactoryTests
             var options = Options.Create(new JwtIssuerOptions());
             
             var userMock = new Mock<ApplicationUser>();
+
+            // needed for non virtual property
+            userMock.SetupAllProperties();
+            userMock.Object.FirstName = "Test";
+
+            // asp.net user virtual properties
             userMock.Setup(m => m.Id).Returns("001");
             userMock.Setup(m => m.Email).Returns("test@test.com");
-            userMock.Setup(m => m.FirstName).Returns("Test");
             userMock.Setup(m => m.UserName).Returns("test@test.com");
 
             var sut = new JwtFactory(options);

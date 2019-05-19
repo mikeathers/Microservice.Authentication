@@ -26,7 +26,7 @@ namespace Microservice.Authentication.Factories.JwtFactory
 
         public async Task<string> GenerateToken(ApplicationUser user)
         {
-            // Create a new array of claims.
+            // ConfirmationEmail a new array of claims.
             var claims = new[]
             {
                 // subject of claim, username from the client.
@@ -43,7 +43,7 @@ namespace Microservice.Authentication.Factories.JwtFactory
                 new Claim("email", user.Email) 
             };
 
-            // Create the JWT security token and encode it.
+            // ConfirmationEmail the JWT security token and encode it.
             var jwt = new JwtSecurityToken(
                 issuer: _jwtIssuerOptions.Issuer,
                 audience: _jwtIssuerOptions.Audience,

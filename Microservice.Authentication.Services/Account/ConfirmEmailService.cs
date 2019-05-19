@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microservice.Authentication.Data.Models.User;
+using Microservice.Authentication.Dtos.Account;
 using Microservice.Authentication.Interfaces.Account;
 using Microservice.Authentication.Interfaces.Generic;
 using Microsoft.AspNetCore.Identity;
@@ -18,34 +19,29 @@ namespace Microservice.Authentication.Services.Account
             _userManager = userManager;
         }
 
-        public async Task<bool> ConfirmEmail(string userId, string emailConfirmationToken)
+        public async Task ConfirmEmail(ConfirmEmailDto confirmEmailDto)
         {
             try
             {
-                if (string.IsNullOrEmpty(userId)) Status.AddError("A 'UserId' has not been provided.");
-                if (string.IsNullOrEmpty(emailConfirmationToken))
-                    Status.AddError("A 'EmailConfirmationToken' has not been provided.");
-                if (Status.HasErrors) return false;
+                var userToConfirm = await _userManager.FindByIdAsync(confirmEmailDto.UserId);
+                if (userToConfirm == null) Status.AddError("A user could not be found with the 'user id' provided");
+                if (Status.HasErrors) return;
 
-                var userToConfirm = await _userManager.FindByIdAsync(userId);
-                var emailConfirm = await _userManager.ConfirmEmailAsync(userToConfirm, emailConfirmationToken);
+                var emailConfirm = await _userManager.ConfirmEmailAsync(userToConfirm, confirmEmailDto.EmailConfirmationToken);
 
-                if (emailConfirm.Succeeded)
-                {
-                    return true;
-                }
+                if (emailConfirm.Succeeded) return;
+
+                Status.AddError("Email confirmation failed.");
 
                 foreach (var error in emailConfirm.Errors)
                 {
                     Status.AddError(error.Description);
                 }
-
-                return false;
+                
             }
             catch (Exception e)
             {
                 Status.AddError(e.Message);
-                return false;
             }
         }
     }

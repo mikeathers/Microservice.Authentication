@@ -112,6 +112,10 @@ namespace Microservice.Authentication.Api
                 .AddSignInManager<SignInManager<ApplicationUser>>()
                 .AddDefaultTokenProviders();
 
+            // Confirmation token timespan (confirm email, password reset)
+            services.Configure<DataProtectionTokenProviderOptions>(o =>
+                o.TokenLifespan = TimeSpan.FromHours(3));
+
             // Add AutoFac
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule<AutoFacServiceModule>();

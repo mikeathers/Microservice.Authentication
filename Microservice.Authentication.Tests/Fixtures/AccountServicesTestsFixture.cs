@@ -2,7 +2,6 @@
 using Microservice.Authentication.Data.Models.User;
 using Microservice.Authentication.Interfaces.Account;
 using Microservice.Authentication.Interfaces.Factories;
-using Microservice.Authentication.Interfaces.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Moq;
@@ -18,9 +17,8 @@ namespace Microservice.Authentication.Tests.Fixtures
         public Mock<IErrorFactory> ErrorFactoryMock { get; private set; }
         public Mock<IMapper> MapperMock { get; private set; }
         public Mock<IJwtFactory> JwtFactoryMock { get; private set; }
-        public Mock<ISendEmailService> SendEmailServiceMock { get; private set; }
         public Mock<IRetrieveAuthenticatedUserService> RetrieveAuthenticatedUserServiceMock { get; set; }
-        public Mock<IConfirmationEmailService> ConfirmationEmailServiceMock { get; set; }
+        public Mock<IGenerateAccountEmailsService> ConfirmationEmailServiceMock { get; set; }
 
         public AccountServicesTestsFixture()
         {
@@ -50,20 +48,17 @@ namespace Microservice.Authentication.Tests.Fixtures
 
             var jwtFactoryMock = new Mock<IJwtFactory>();
 
-            var sendEmailMock = new Mock<ISendEmailService>();
+            
 
             var retrieveAuthenticatedUserServiceMock = new Mock<IRetrieveAuthenticatedUserService>();
 
-            var confirmationEmailServiceMock = new Mock<IConfirmationEmailService>();
+            var confirmationEmailServiceMock = new Mock<IGenerateAccountEmailsService>();
 
             UserMock = user;
-            UserStoreMock = store;
-            UserManagerMock = userManagerMock;
             SignInManagerMock = signInManagerMock;
             ErrorFactoryMock = errorFactoryMock;
             MapperMock = mapperMock;
             JwtFactoryMock = jwtFactoryMock;
-            SendEmailServiceMock = sendEmailMock;
             RetrieveAuthenticatedUserServiceMock = retrieveAuthenticatedUserServiceMock;
             ConfirmationEmailServiceMock = confirmationEmailServiceMock;
         }

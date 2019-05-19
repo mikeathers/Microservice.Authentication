@@ -29,7 +29,7 @@ namespace Microservice.Authentication.Tests.UnitTests.Validators.Account
                 Password = "Password123!"
             };
 
-            var registerValidator = new RegisterValidator();
+            var registerValidator = new EmailValidator();
 
             // Act
             var validatorResult = registerValidator.Validate(registerDto);
@@ -50,7 +50,7 @@ namespace Microservice.Authentication.Tests.UnitTests.Validators.Account
                 Password = password
             };
 
-            var registerValidator = new RegisterValidator();
+            var registerValidator = new EmailValidator();
 
             // Act
             var validatorResult = registerValidator.Validate(registerDto);

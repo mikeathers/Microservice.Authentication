@@ -5,6 +5,7 @@ using Microservice.Authentication.Dtos.Account;
 using Microservice.Authentication.Services.Account;
 using Microservice.Authentication.Tests.Fixtures;
 using Microservice.Authentication.Tests.SeedData;
+using Microsoft.AspNetCore.Identity;
 using Moq;
 using TestSupport.EfHelpers;
 using Xunit;
@@ -37,9 +38,9 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 };
 
                 var user = _fixture.UserMock;
-                var store = _fixture.UserStoreMock;
 
-                var userManagerMock = _fixture.UserManagerMock;
+                var store = new Mock<IUserStore<ApplicationUser>>();
+                var userManagerMock = new Mock<UserManager<ApplicationUser>>(store.Object, null, null, null, null, null, null, null, null);
                 userManagerMock.Setup(m => m.FindByNameAsync(loginInfo.Email)).Returns(Task.FromResult(user.Object));
 
                 var errorFactoryMock = _fixture.ErrorFactoryMock;
@@ -79,9 +80,8 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 };
 
                 var user = _fixture.UserMock;
-                var store = _fixture.UserStoreMock;
-
-                var userManagerMock = _fixture.UserManagerMock;
+                var store = new Mock<IUserStore<ApplicationUser>>();
+                var userManagerMock = new Mock<UserManager<ApplicationUser>>(store.Object, null, null, null, null, null, null, null, null);
                 userManagerMock.Setup(m => m.FindByNameAsync(loginInfo.Email)).Returns(Task.FromResult(user.Object));
                 userManagerMock.Setup(m => m.CheckPasswordAsync(user.Object, loginInfo.Password))
                     .Returns(Task.FromResult(true));
@@ -122,9 +122,8 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 };
 
                 var user = _fixture.UserMock;
-                var store = _fixture.UserStoreMock;
-
-                var userManagerMock = _fixture.UserManagerMock;
+                var store = new Mock<IUserStore<ApplicationUser>>();
+                var userManagerMock = new Mock<UserManager<ApplicationUser>>(store.Object, null, null, null, null, null, null, null, null);
                 userManagerMock.Setup(m => m.FindByNameAsync(loginInfo.Email)).Returns(Task.FromResult((ApplicationUser)null));
 
                 var errorFactoryMock = _fixture.ErrorFactoryMock;
@@ -164,9 +163,8 @@ namespace Microservice.Authentication.Tests.UnitTests.Services.Account
                 };
 
                 var user = _fixture.UserMock;
-                var store = _fixture.UserStoreMock;
-
-                var userManagerMock = _fixture.UserManagerMock;
+                var store = new Mock<IUserStore<ApplicationUser>>();
+                var userManagerMock = new Mock<UserManager<ApplicationUser>>(store.Object, null, null, null, null, null, null, null, null);
                 userManagerMock.Setup(m => m.FindByNameAsync(loginInfo.Email)).Returns(Task.FromResult(user.Object));
 
                 var errorFactoryMock = _fixture.ErrorFactoryMock;
